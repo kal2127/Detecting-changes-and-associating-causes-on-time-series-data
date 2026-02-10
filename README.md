@@ -1,136 +1,74 @@
-# Detecting-changes-and-associating-causes-on-time-series-data
+Birhan Energies: Brent Oil Price Analysis Dashboard
+This project analyzes historical Brent Oil prices to detect "Structural Breaks"—significant moments where the market regime changed. It uses Bayesian Inference for the math and a Full-Stack Dashboard for visualization.
 
-Brent Oil Price Change Point Analysis
-Task 1: Foundation & Exploratory Analysis
-Project Overview
+🚀 Project Overview
+Task 1: Defined historical events affecting oil prices.
 
-This project is part of 10 Academy – AI Mastery Program (Week 11 Challenge).
-The objective is to analyze Brent oil price time series data to understand how major geopolitical and economic events are associated with structural changes in oil prices.
+Task 2: Built a Bayesian Change-Point Model (PyMC) to find market shifts.
 
-Task 1 focuses on planning, understanding the data, and exploratory analysis, laying the foundation for Bayesian change point modeling in later stages.
+Task 3: Developed an interactive Flask + React dashboard.
 
-🎯 Objectives of Task 1
+🛠️ Key Findings
+Major Market Shift: Detected on February 23, 2005.
 
-The goals of Task 1 are to:
+Average Price Before: $21.44.
 
-Define a clear data analysis workflow for the project
+Average Price After: $75.60.
 
-Understand the statistical properties of Brent oil price time series
+Economic Impact: A structural price increase of 252.6%, linked to the "Commodity Super-Cycle" and rising demand in China.
 
-Conduct initial exploratory data analysis (EDA)
+🏗️ System Architecture
+The project is split into two main parts:
 
-Compile a structured dataset of major oil-related events
+Backend (Flask): Processes the data and serves analysis results via API endpoints.
 
-Document key assumptions and limitations
+Frontend (React): An interactive UI that displays key metrics and price trends using Recharts.
 
-📁 Project Structure (Task 1)
-├── data/
-│   ├── brent_oil_prices.csv
-│   └── oil_events.csv
-│
-├── notebooks/
-│   └── task1_eda.ipynb
-│
-├── .gitignore
-│  
-│
-└── README.md
+💻 Setup Instructions
+1. Prerequisites
+Make sure you have Python 3.x and Node.js installed on your computer.
 
-📊 Dataset Description
-Brent Oil Price Data
+2. Backend Setup (Flask)
+Open a terminal in the project folder.
 
-Source: Historical Brent oil price records
+Install dependencies:
 
-Time Period: May 20, 1987 – September 30, 2022
+Bash
 
-Frequency: Daily
+pip install flask flask-cors pandas
+Run the server:
 
-Columns:
+Bash
 
-Date: Date of observation
+python app.py
+The backend will run on http://127.0.0.1:5000.
 
-Price: Brent oil price (USD per barrel)
+3. Frontend Setup (React)
+Open a second terminal in the brent-dashboard folder.
 
-Event Dataset
+Install dependencies:
 
-A manually curated dataset containing 10–15 major geopolitical and economic events that are relevant to the global oil market, such as:
+Bash
 
-OPEC policy decisions
+npm install
+npm install axios recharts
+Start the dashboard:
 
-Global financial crises
+Bash
 
-Wars and geopolitical conflicts
+npm start
+The dashboard will open at http://localhost:3000.
 
-COVID-19 pandemic
+📊 API Endpoints
+GET /api/prices: Returns the last 1000 days of historical price data.
 
-Each event includes:
+GET /api/analysis: Returns the change-point date and impact percentages.
 
-Event date
+📂 Project Structure
+app.py: Flask backend server.
 
-Brief description
+brent_oil_prices.csv: Raw historical data.
 
-🔍 Exploratory Data Analysis (EDA)
+brent-dashboard/: React frontend application.
 
-The following analyses were performed:
-
-Visualization of Brent oil prices over time
-
-Identification of long-term trends and sudden price shocks
-
-Assessment of stationarity through visual inspection
-
-Computation and visualization of log returns
-
-Observation of volatility clustering
-
-These findings indicate that the price series is non-stationary and exhibits structural breaks, motivating the use of change point analysis.
-
-🧠 Methodological Motivation
-
-Due to:
-
-Changing mean and variance over time
-
-Presence of large external shocks
-
-Volatility clustering
-
-Traditional time series models may be insufficient.
-Therefore, this project adopts a Bayesian change point modeling approach (implemented in later tasks) to identify statistically significant regime shifts in Brent oil prices.
-
-⚠️ Assumptions and Limitations
-
-Detected change points represent statistical associations, not causal proof
-
-Multiple real-world events may occur near the same time
-
-Daily price movements are influenced by unobserved market factors
-
-Event dates are approximate and may not capture delayed market reactions
-
-📌 Deliverables for Task 1
-
-✔️ 1–2 page foundation and planning report
-
-✔️ Event dataset (oil_events.csv)
-
-✔️ Initial EDA notebook with visualizations
-
-✔️ This README file
-
-🚀 Next Steps
-
-In Task 2, Bayesian change point detection using PyMC will be applied to:
-
-Identify structural breaks
-
-Quantify changes in price behavior
-
-Associate detected changes with real-world events
-
-👤 Author
-
-Name: Kalkidan Tesfaye
-Program: 10 Academy – AI Mastery
-Week: 11
-Challenge: Change Point Analysis of Time Series Datav
+.gitignore: List of files to ignore for Git.
