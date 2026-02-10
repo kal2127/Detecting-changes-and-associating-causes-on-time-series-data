@@ -1,0 +1,30 @@
+# --- Python / Flask ---
+__pycache__/
+*.py[cod]
+*$py.class
+myvenv/
+.venv/
+env/
+.env
+build/
+dist/
+
+# --- React / Frontend ---
+node_modules/
+/brent-dashboard/build
+.pnp
+.pnp.js
+
+# --- Notebooks ---
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# --- OS / IDE ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Large Data Files ---
+# If your Brent Oil CSV is huge, you might want to ignore it
+# brent_oil_prices.csv
