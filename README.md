@@ -1,74 +1,232 @@
-Birhan Energies: Brent Oil Price Analysis Dashboard
-This project analyzes historical Brent Oil prices to detect "Structural Breaks"—significant moments where the market regime changed. It uses Bayesian Inference for the math and a Full-Stack Dashboard for visualization.
+Birhan Energies: Brent Oil Price Structural Break Analysis Dashboard
+
+Bayesian Change Point Analysis and Interactive Visualization (1987–2022)
+
+📌 About Birhan Energies
+
+Birhan Energies is a consultancy firm specializing in data-driven energy market insights and strategic advisory services for investors, policymakers, and energy companies.
+
+This project demonstrates how advanced statistical modeling combined with interactive visualization can uncover structural shifts in global energy markets.
 
 🚀 Project Overview
-Task 1: Defined historical events affecting oil prices.
 
-Task 2: Built a Bayesian Change-Point Model (PyMC) to find market shifts.
+This project analyzes historical Brent Oil prices (1987–2022) to detect structural breaks — major regime shifts where the underlying price dynamics permanently changed.
 
-Task 3: Developed an interactive Flask + React dashboard.
+The project consists of three main tasks:
 
-🛠️ Key Findings
-Major Market Shift: Detected on February 23, 2005.
+✅ Task 1 – Event Research & Data Enrichment
 
-Average Price Before: $21.44.
+Identified major geopolitical and economic events that historically influenced oil prices.
 
-Average Price After: $75.60.
+✅ Task 2 – Bayesian Change Point Modeling
 
-Economic Impact: A structural price increase of 252.6%, linked to the "Commodity Super-Cycle" and rising demand in China.
+Built a Bayesian stochastic change-point model (PyMC) to statistically detect structural shifts in oil prices.
+
+✅ Task 3 – Full-Stack Dashboard
+
+Developed an interactive Flask (backend) + React (frontend) dashboard to communicate findings clearly to stakeholders.
+
+📊 Key Findings
+🔎 Major Structural Break Detected
+
+February 23, 2005
+
+💰 Average Price Before Break
+
+$21.44
+
+💰 Average Price After Break
+
+$75.60
+
+📈 Structural Impact
+
+A +252.6% permanent increase in baseline oil prices.
+
+🌍 Historical Interpretation
+
+The detected break aligns with the Commodity Super-Cycle (mid-2000s) driven by:
+
+Rapid industrialization in China
+
+Global demand expansion
+
+Sustained energy consumption growth
+
+This indicates a permanent market regime shift — not a temporary shock.
+
+📅 Historical Events Considered (Task 1)
+
+The following major geopolitical and economic events were compiled to contextualize structural changes:
+
+Date	Event	Description	Market Impact
+1990-08	Gulf War	Iraq invades Kuwait	Major supply disruption
+1997-07	Asian Financial Crisis	Financial collapse in Asia	Demand contraction
+2001-09	9/11 Attacks	Terrorist attacks in USA	Short-term demand shock
+2003-03	Iraq War	U.S.-led invasion of Iraq	Geopolitical uncertainty
+2005-02	Commodity Super-Cycle	Rapid growth in China demand	Long-term price regime shift
+2008-09	Global Financial Crisis	Global recession	Sharp price collapse
+2014-06	Oil Price Crash	OPEC supply expansion	Market oversupply
+2020-03	COVID-19 Pandemic	Global lockdowns	Historic demand collapse
+2022-02	Russia–Ukraine War	Major geopolitical conflict	Price spike & volatility
+
+These events were used to interpret model-detected structural changes.
+
+🧠 Methodology (Task 2)
+Bayesian Change Point Model
+
+A stochastic change-point model was implemented using PyMC.
+
+The model assumes:
+
+A pre-change regime with mean price μ₁
+
+A post-change regime with mean price μ₂
+
+An unknown switch point τ
+
+Using MCMC sampling, the model inferred:
+
+Change-point date (τ)
+
+Regime means (μ₁, μ₂)
+
+Convergence diagnostics (R-hat)
+
+Model Reliability
+
+R̂ (R-hat) = 1.0
+Indicates excellent convergence and high statistical confidence.
+
+🖥️ Interactive Dashboard (Task 3)
+
+The dashboard translates complex Bayesian outputs into stakeholder-friendly insights.
+
+Features
+🔹 Key Indicator Cards
+
+Detected Change Point
+
+Percentage Price Increase
+
+🔹 Interactive Price Chart
+
+Full historical Brent price timeline
+
+Visualizes:
+
+2005 regime shift
+
+2008 crash
+
+2020 COVID collapse
+
+2022 volatility
+
+Built using Recharts for responsive and dynamic visualization.
+
+🖼️ Dashboard Screenshot
+
+<img width="1900" height="849" alt="image" src="https://github.com/user-attachments/assets/86e4ddbe-a630-439f-b693-93267ab03936" />
+
+
+
+Create a folder named screenshots/ and place your image inside it.
 
 🏗️ System Architecture
-The project is split into two main parts:
 
-Backend (Flask): Processes the data and serves analysis results via API endpoints.
+The project follows a full-stack architecture:
 
-Frontend (React): An interactive UI that displays key metrics and price trends using Recharts.
+Backend (Flask)
 
-💻 Setup Instructions
-1. Prerequisites
-Make sure you have Python 3.x and Node.js installed on your computer.
+Processes historical data
 
-2. Backend Setup (Flask)
-Open a terminal in the project folder.
+Stores Bayesian model results
 
-Install dependencies:
+Serves JSON API endpoints
 
-Bash
+Frontend (React)
 
-pip install flask flask-cors pandas
-Run the server:
+Fetches data using Axios
 
-Bash
+Displays metrics and charts
 
-python app.py
-The backend will run on http://127.0.0.1:5000.
-
-3. Frontend Setup (React)
-Open a second terminal in the brent-dashboard folder.
-
-Install dependencies:
-
-Bash
-
-npm install
-npm install axios recharts
-Start the dashboard:
-
-Bash
-
-npm start
-The dashboard will open at http://localhost:3000.
+Responsive stakeholder-focused UI
 
 📊 API Endpoints
-GET /api/prices: Returns the last 1000 days of historical price data.
-
-GET /api/analysis: Returns the change-point date and impact percentages.
-
+Endpoint	Description
+GET /api/prices	Returns historical Brent price data
+GET /api/analysis	Returns change-point date and percentage impact
 📂 Project Structure
-app.py: Flask backend server.
+|---dashboard
+    ├── app.py
+|--- data
+    ├── BrentOilPrices.csv
+    ├── events.csv
+├── .gitignore
+├── brent-dashboard/
+│   ├── src/
+│   ├── package.json
+│   └── ...
+|---notebooks
+    |---task1-eda.ipynb
+    |---preparingdata.ipynb
+├── requirements.txt
+└── README.md
 
-brent_oil_prices.csv: Raw historical data.
+💻 Setup Instructions
+1️⃣ Prerequisites
 
-brent-dashboard/: React frontend application.
+Python 3.x
 
-.gitignore: List of files to ignore for Git.
+Node.js
+
+npm
+
+2️⃣ Backend Setup (Flask)
+pip install -r requirements.txt
+python app.py
+
+
+Backend runs at:
+http://127.0.0.1:5000
+
+3️⃣ Frontend Setup (React)
+cd brent-dashboard
+npm install
+npm install axios recharts
+npm start
+
+
+Frontend runs at:
+http://localhost:3000
+
+⚠️ Limitations
+
+Assumes only one dominant structural break
+
+Does not include macroeconomic covariates
+
+Does not model volatility regime shifts
+
+🔮 Future Improvements
+
+Multiple change-point detection
+
+Regime-switching volatility models
+
+Integration of GDP, inflation, exchange rates
+
+Forecasting with Bayesian hierarchical models
+
+📌 Conclusion
+
+This project demonstrates how Bayesian inference combined with full-stack visualization can:
+
+Detect permanent structural shifts in financial markets
+
+Quantify long-term regime changes
+
+Communicate advanced analytics to non-technical stakeholders
+
+The 2005 structural break confirms that the global oil market transitioned into a permanently higher price regime, reshaping energy economics for nearly two decades.
