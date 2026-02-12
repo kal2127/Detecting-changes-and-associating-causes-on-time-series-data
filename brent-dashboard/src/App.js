@@ -14,19 +14,33 @@ import {
 function App() {
   const [analysis, setAnalysis] = useState({});
   const [prices, setPrices] = useState([]);
+  const [events, setEvents] = useState([]);
+  // Use the YYYY-MM-DD format here too
+  const [startDate, setStartDate] = useState("1987-05-20");
+  const [endDate, setEndDate] = useState("2022-09-30");
 
   useEffect(() => {
-    // 1. Get the Bayesian analysis results from Flask
+    // 1. Get the Bayesian analysis results
     axios
       .get("http://127.0.0.1:5000/api/analysis")
       .then((res) => setAnalysis(res.data))
-      .catch((err) => console.log("Backend not running?"));
+      .catch((err) => console.log("Backend offline"));
 
-    // 2. Get the historical price data from Flask
+    // 2. Get the historical price data
     axios
       .get("http://127.0.0.1:5000/api/prices")
       .then((res) => setPrices(res.data));
+
+    // 3. NEW: Get the event-correlation data
+    axios
+      .get("http://127.0.0.1:5000/api/events")
+      .then((res) => setEvents(res.data));
   }, []);
+
+  // Filter data based on user selection
+  const filteredData = prices.filter(
+    (p) => p.Date >= startDate && p.Date <= endDate,
+  );
 
   return (
     <div
@@ -38,10 +52,36 @@ function App() {
     >
       <header style={{ marginBottom: "30px" }}>
         <h1 style={{ color: "#2c3e50" }}>
-          Birhan Energies: Brent Oil Analysis
+          Birhan Energies: Brent Oil Dashboard
         </h1>
-        <p>Interactive View of Structural Market Breaks</p>
+        <p>Interactive View of Structural Market Breaks & Global Events</p>
       </header>
+
+      {/* NEW: DATE FILTERS */}
+      <div
+        style={{
+          marginBottom: "20px",
+          display: "flex",
+          gap: "10px",
+          alignItems: "center",
+        }}
+      >
+        <label>From:</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <label>To:</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        <span style={{ marginLeft: "20px", fontSize: "0.9rem", color: "#666" }}>
+          (Filter data to see specific periods)
+        </span>
+      </div>
 
       {/* KEY STATS CARDS */}
       <div style={{ display: "flex", gap: "20px", marginBottom: "40px" }}>
@@ -66,27 +106,38 @@ function App() {
           boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
         }}
       >
-        <h3>Historical Price Trend & Model Detection</h3>
-        <div style={{ height: "400px", width: "100%" }}>
+        <h3>Historical Price Trend & Event Correlation</h3>
+        <div style={{ height: "450px", width: "100%" }}>
           <ResponsiveContainer>
-            <LineChart data={prices}>
+            <LineChart data={filteredData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="Date" />
               <YAxis domain={["auto", "auto"]} />
               <Tooltip />
 
-              {/* NEW: Vertical indicator for the detected change point */}
+              {/* Main Structural Break Line */}
               <ReferenceLine
                 x="2005-02-23"
                 stroke="red"
-                label={{
-                  value: "Market Shift",
-                  position: "top",
-                  fill: "red",
-                  fontSize: 14,
-                }}
-                strokeDasharray="5 5"
+                strokeWidth={2}
+                label={{ value: "MAJOR SHIFT", fill: "red" }}
               />
+
+              {/* NEW: Interactive Event Highlights */}
+              {events.map((ev, i) => (
+                <ReferenceLine
+                  key={i}
+                  x={ev.date}
+                  stroke="orange"
+                  strokeDasharray="3 3"
+                  label={{
+                    value: ev.event,
+                    position: "insideBottomRight",
+                    fill: "orange",
+                    fontSize: 10,
+                  }}
+                />
+              ))}
 
               <Line
                 type="monotone"
@@ -103,7 +154,6 @@ function App() {
   );
 }
 
-// Simple styling for our cards
 const cardStyle = {
   flex: 1,
   backgroundColor: "white",
